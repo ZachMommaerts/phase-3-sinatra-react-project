@@ -6,4 +6,7 @@ class ApplicationController < Sinatra::Base
     { message: "Good luck with your project!" }.to_json
   end
 
+  get '/leaderboards' do
+    Score.all.sort{ |a,b| b.score <=> a.score}.to_json(includes: :username)
+  end
 end
