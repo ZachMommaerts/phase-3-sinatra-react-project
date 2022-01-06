@@ -3,6 +3,7 @@ require 'open-uri'
 require 'pry'
 
 require_relative './billboard_top_100.rb'
+require_relative '../models/song.rb'
 
 class Scraper
 
@@ -13,7 +14,6 @@ class Scraper
 
     def top100_tracks
         self.get_webpage.css(".o-chart-results-list-row-container")
-        # self.get_webpage.css(".o-chart-results-list__item")
     end
 
     def create_songs
@@ -27,6 +27,7 @@ class Scraper
 
     def print_songs
         self.create_songs
+        Song.all.destroy_all
         BillboardTop100.all.each do |song|
             if song.songname && song.songname != ""
                 Song.create(
@@ -40,6 +41,7 @@ class Scraper
             end
         end
     end
+    binding.pry
 end
 
 Scraper.new.print_songs
