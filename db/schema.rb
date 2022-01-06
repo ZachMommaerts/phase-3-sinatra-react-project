@@ -12,7 +12,7 @@
 
 ActiveRecord::Schema.define(version: 2022_01_06_221624) do
 
-  create_table "score", force: :cascade do |t|
+  create_table "scores", force: :cascade do |t|
     t.integer "score"
     t.integer "username_id"
     t.datetime "created_at", precision: 6, null: false
@@ -21,7 +21,6 @@ ActiveRecord::Schema.define(version: 2022_01_06_221624) do
 
   create_table "usernames", force: :cascade do |t|
     t.string "name"
-    t.integer "username_id"
   end
 
 end
