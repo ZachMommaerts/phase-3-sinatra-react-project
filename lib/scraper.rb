@@ -29,9 +29,14 @@ class Scraper
         self.create_songs
         BillboardTop100.all.each do |song|
             if song.songname && song.songname != ""
-                puts "Song: #{song.songname}"
-                puts "Artist: #{song.artist}"
-                puts "Currentposition: #{song.currentposition}" 
+                Song.create(
+                    song: song.songname,
+                    artist: song.artist,
+                    currentposition: song.currentposition
+                )
+                # puts "Song: #{song.songname}"
+                # puts "Artist: #{song.artist}"
+                # puts "Currentposition: #{song.currentposition}" 
             end
         end
     end
