@@ -1,5 +1,5 @@
 class BillboardTop100
-    attr_accessor :songname, :artist
+    attr_accessor :songname, :artist, :currentposition
     @@all = []
 
     def initialize

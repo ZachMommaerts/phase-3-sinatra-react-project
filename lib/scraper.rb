@@ -12,15 +12,16 @@ class Scraper
     end
 
     def top100_tracks
-        # self.get_webpage.css(".o-chart-results-list-row-container")
-        self.get_webpage.css(".o-chart-results-list__item")
+        self.get_webpage.css(".o-chart-results-list-row-container")
+        # self.get_webpage.css(".o-chart-results-list__item")
     end
 
     def create_songs
         self.top100_tracks.each do |music|
             song = BillboardTop100.new
-            song.songname = music.css("h3").text
-            song.artist = music.css(".c-label").text
+            song.songname = music.css("h3").first.text
+            song.artist = music.css(".c-label")[1].text
+            song.currentposition = music.css(".c-label")[0].text
         end
     end
 
@@ -30,6 +31,7 @@ class Scraper
             if song.songname && song.songname != ""
                 puts "Song: #{song.songname}"
                 puts "Artist: #{song.artist}"
+                puts "Currentposition: #{song.currentposition}" 
             end
         end
     end
