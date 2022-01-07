@@ -9,4 +9,14 @@ class ApplicationController < Sinatra::Base
   get '/leaderboards' do
     Score.all.sort{ |a,b| b.score <=> a.score}.to_json(includes: :username)
   end
+
+  get '/songs/:id' do
+    Song.destroy_all
+
+    scraper = Scraper.new
+    songs = scraper.print_songs
+    Song.create_from_collection(songs)
+
+    Song.find(params[:id]).to_json
+  end
 end

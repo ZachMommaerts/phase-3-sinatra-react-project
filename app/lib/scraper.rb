@@ -3,7 +3,7 @@ require 'open-uri'
 require 'pry'
 
 require_relative './billboard_top_100.rb'
-require_relative '../models/song.rb'
+# require_relative '../models/song.rb'
 
 class Scraper
 
@@ -19,29 +19,29 @@ class Scraper
     def create_songs
         self.top100_tracks.each do |music|
             song = BillboardTop100.new
-            song.songname = music.css("h3").first.text
-            song.artist = music.css(".c-label")[1].text
-            song.currentposition = music.css(".c-label")[0].text
+            song.songname = music.css("h3").first.text.strip
+            song.artist = music.css(".c-label.a-no-trucate").text.strip
+            song.currentposition = music.css(".c-label")[0].text.strip
         end
     end
 
     def print_songs
+        songs = []
         self.create_songs
-        Song.all.destroy_all
         BillboardTop100.all.each do |song|
             if song.songname && song.songname != ""
-                Song.create(
-                    song: song.songname,
+                song_info = {
+                    songname: song.songname,
                     artist: song.artist,
                     currentposition: song.currentposition
-                )
-                # puts "Song: #{song.songname}"
-                # puts "Artist: #{song.artist}"
-                # puts "Currentposition: #{song.currentposition}" 
+            }
+
+                songs << song_info
             end
         end
+
+        songs
     end
-    binding.pry
 end
 
 Scraper.new.print_songs
