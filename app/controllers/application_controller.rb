@@ -7,7 +7,7 @@ class ApplicationController < Sinatra::Base
   end
 
   get '/leaderboards' do
-    Score.all.sort{ |a,b| b.score <=> a.score}.to_json(includes: :username)
+    Score.all.sort{ |a,b| b.score <=> a.score}.to_json(include: :username)
   end
 
   get '/songs/:id' do
@@ -18,5 +18,11 @@ class ApplicationController < Sinatra::Base
     Song.create_from_collection(songs)
 
     Song.find(params[:id]).to_json
+  end
+
+  post '/players' do
+    player = Username.create(name: params[:username])
+    Score.create(score: 0, username_id: player.id)
+    player.to_json
   end
 end
