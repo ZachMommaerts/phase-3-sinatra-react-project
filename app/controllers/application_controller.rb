@@ -4,10 +4,11 @@ class ApplicationController < Sinatra::Base
   # Add your routes here
   get "/" do
     Song.destroy_all
-
     scraper = Scraper.new
     songs = scraper.print_songs
     Song.create_from_collection(songs)
+  
+    Song.all.to_json
   end
 
   get '/leaderboards' do
@@ -15,7 +16,7 @@ class ApplicationController < Sinatra::Base
   end
 
   get '/random_song' do
-    Song.all.rawQuery("SELECT * FROM songs ORDER BY RANDOM() LIMIT 1", null);
+    Song.all.sample.to_json
   end
 
   post '/players' do

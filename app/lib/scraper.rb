@@ -39,9 +39,6 @@ class Scraper
                 songs << song_info
             end
         end
-
         songs
     end
 end
-
-Scraper.new.print_songs
