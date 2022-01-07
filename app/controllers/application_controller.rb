@@ -25,8 +25,8 @@ class ApplicationController < Sinatra::Base
     player.to_json
   end
 
-  patch '/scores/:id' do
-    score = Score.find(params[:id])
+  patch '/update_score' do
+    score = Score.last
     score.update(
       score: params[:score]
     )
