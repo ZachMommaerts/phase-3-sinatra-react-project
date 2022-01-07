@@ -24,4 +24,12 @@ class ApplicationController < Sinatra::Base
     Score.create(score: 0, username_id: player.id)
     player.to_json
   end
+
+  patch '/scores/:id' do
+    score = Score.find(params[:id])
+    score.update(
+      score: params[:score]
+    )
+    score.to_json
+  end
 end
