@@ -12,7 +12,7 @@ class ApplicationController < Sinatra::Base
   end
 
   get '/leaderboards' do
-    Score.all.sort{ |a,b| b.score <=> a.score}.to_json(include: :username)
+    Score.all.sort{ |a,b| b.score <=> a.score}.first(10).to_json(include: :username)
   end
 
   get '/random_song' do
